@@ -1,1 +1,1 @@
-# book_chigo_janggu_chigo
+# book_chigo_joonggo_chigo
