@@ -8,13 +8,17 @@ import com.bookchigo.domain.BuyFin;
 
 public interface SellMapper {
 	List<SellItem> getSellList();
-	List<SellItem> getSellByItemId(int itemId);
+	SellItem getSellByItemId(int itemId);
+	int getMemberIdbyItemId(int itemId);
 	List<SellItem> getSellListByItemName(String itemName);
 	List<SellItem> getSellListByMemberId(int memberId);
 	
 	int getDealStatus(int itemId);
 	int getMemberIdBySell(int itemId);
 	int getMemberIdbyId(String id);
+	String getNamebyId(int memberId);
+	int getCountbyId(int memberId);
+	void updateName(SellItem item);
 	
 	List<Wishlist> selectWishlist(int memberId);
 	List<BuyFin> selectBuyFin(int memberId);

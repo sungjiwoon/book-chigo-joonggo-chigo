@@ -10,7 +10,9 @@ import org.springframework.dao.DataAccessException;
 
 public interface SellDao {
 	List<SellItem> getSellList() throws DataAccessException;
-	List<SellItem> getSellByItemId(int itemId) throws DataAccessException;
+	SellItem getSellByItemId(int itemId) throws DataAccessException;
+	int getCountbyId(int memberId) throws DataAccessException;
+	int getMemberIdbyItemId(int itemId) throws DataAccessException;
 	List<SellItem> getSellListByItemName(String itemName) throws DataAccessException;
 	List<SellItem> getSellListByMemberId(int memberId) throws DataAccessException;
 	void insertSellItem(SellItem item) throws DataAccessException;

@@ -11,7 +11,7 @@ import com.bookchigo.domain.Wishlist;
 import com.bookchigo.domain.BuyFin;
 
 @Service("sellServiceImpl")
-public class SellServiceImpl implements SellService {
+public class SellServiceImpl implements SellServiceFacade {
 	@Autowired
 	private SellDao sellDao;
 	
@@ -19,8 +19,16 @@ public class SellServiceImpl implements SellService {
 		return sellDao.getSellList();
 	}
 	
-	public List<SellItem> getSellByItemId(int itemId) {
+	public SellItem getSellByItemId(int itemId) {
 		return sellDao.getSellByItemId(itemId);
+	}
+	
+	public int getCountbyId(int memberId) {
+		return sellDao.getCountbyId(memberId);
+	}
+	
+	public int getMemberIdbyItemId(int itemId) {
+		return sellDao.getMemberIdbyItemId(itemId);
 	}
 	
 	public List<SellItem> getSellListByItemName(String itemName) {
