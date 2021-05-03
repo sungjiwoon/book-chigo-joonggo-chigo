@@ -15,13 +15,13 @@
 	<table class="slist" align="center">
 		<tr bgcolor="ffffff">
 			<td style="border-right:1px solid #E6E6E6; border-top:1px solid #E6E6E6; border-left:1px solid #E6E6E6; border-collapse: collapse;">
-				<a href='sell_seller.jsp' ><img border="0" src="../../images/cat1.jpg" /></a></td>	
+				<a href='sell_seller.jsp' ><img border="0" src="../images/cat1.jpg" /></a></td>	
 			<td style="border-right:1px solid #E6E6E6; border-top:1px solid #E6E6E6; border-left:1px solid #E6E6E6; border-collapse: collapse;">
-				<a href='sell_publisher.jsp'><img border="0" src="../../images/cat2.jpg" /></a></td>
+				<a href='sell_publisher.jsp'><img border="0" src="../images/cat2.jpg" /></a></td>
 			<td style="border-right:1px solid #E6E6E6; border-top:1px solid #E6E6E6; border-left:1px solid #E6E6E6; border-collapse: collapse;">
-				<a href='sell_publisher.jsp'><img border="0" src="../../images/dog1.jpg" /></a></td>
+				<a href='sell_publisher.jsp'><img border="0" src="../images/dog1.jpg" /></a></td>
 			<td style="border-right:1px solid #E6E6E6; border-top:1px solid #E6E6E6; border-left:1px solid #E6E6E6; border-collapse: collapse;">
-				<a href='sell_publisher.jsp'><img border="0" src="../../images/dog2.jpg" /></a></td>
+				<a href='sell_publisher.jsp'><img border="0" src="../images/dog2.jpg" /></a></td>
 		</tr>
 		<tr bgcolor="ffffff">
 			<td style="border-right:1px solid #E6E6E6; border-left:1px solid #E6E6E6; border-collapse: collapse;">고양이 사전</td>
@@ -37,13 +37,13 @@
 		</tr>
 		<tr bgcolor="ffffff">
 			<td style="border-right:1px solid #E6E6E6; border-top:1px solid #E6E6E6; border-left:1px solid #E6E6E6; border-collapse: collapse;">
-				<a href='sell_publisher.jsp'><img border="0" src="../../images/cat1.jpg" /></a></td>	
+				<a href='sell_publisher.jsp'><img border="0" src="../images/cat1.jpg" /></a></td>	
 			<td style="border-right:1px solid #E6E6E6; border-top:1px solid #E6E6E6; border-left:1px solid #E6E6E6; border-collapse: collapse;">
-				<a href='sell_publisher.jsp'><img border="0" src="../../images/cat2.jpg" /></a></td>
+				<a href='sell_publisher.jsp'><img border="0" src="../images/cat2.jpg" /></a></td>
 			<td style="border-right:1px solid #E6E6E6; border-top:1px solid #E6E6E6; border-left:1px solid #E6E6E6; border-collapse: collapse;">
-				<a href='sell_publisher.jsp'><img border="0" src="../../images/dog1.jpg" /></a></td>
+				<a href='sell_publisher.jsp'><img border="0" src="../images/dog1.jpg" /></a></td>
 			<td style="border-right:1px solid #E6E6E6; border-top:1px solid #E6E6E6; border-left:1px solid #E6E6E6; border-collapse: collapse;">
-				<a href='sell_publisher.jsp'><img border="0" src="../../images/dog2.jpg" /></a></td>
+				<a href='sell_publisher.jsp'><img border="0" src="../images/dog2.jpg" /></a></td>
 		</tr>
 		<tr bgcolor="ffffff">
 			<td style="border-right:1px solid #E6E6E6; border-left:1px solid #E6E6E6; border-collapse: collapse;">고양이 사전</td>

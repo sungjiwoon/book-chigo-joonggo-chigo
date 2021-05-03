@@ -42,6 +42,8 @@ public class MyBatisSellDao implements SellDao {
 	}
 	
 	public void insertSellItem(SellItem item) throws DataAccessException {
+		String account = sellMapper.getAccountByMemberId(item.getMemberId());
+		item.setAccount(account);
 		sellMapper.insertSellItem(item);
 		
 		String name = sellMapper.getNamebyId(item.getMemberId());
@@ -70,6 +72,8 @@ public class MyBatisSellDao implements SellDao {
 	}
 	
 	public void insertWishlist(Wishlist wish) throws DataAccessException {
+		String account = sellMapper.getAccountByMemberId(wish.getMemberId());
+		wish.setAccount(account);
 		sellMapper.insertWishlist(wish);
 	}
 	
@@ -86,6 +90,8 @@ public class MyBatisSellDao implements SellDao {
 	}
 	
 	public void insertBuyFin(BuyFin buy) throws DataAccessException {
+		String account = sellMapper.getAccountByMemberId(buy.getmemberId());
+		buy.setAccount(account);
 		sellMapper.insertBuyFin(buy);
 	}
 	

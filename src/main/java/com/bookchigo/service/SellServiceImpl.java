@@ -4,13 +4,15 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bookchigo.dao.SellDao;
 import com.bookchigo.domain.SellItem;
 import com.bookchigo.domain.Wishlist;
 import com.bookchigo.domain.BuyFin;
 
-@Service("sellServiceImpl")
+@Service
+@Transactional
 public class SellServiceImpl implements SellServiceFacade {
 	@Autowired
 	private SellDao sellDao;

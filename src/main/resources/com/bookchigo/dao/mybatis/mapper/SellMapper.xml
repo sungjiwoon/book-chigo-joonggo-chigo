@@ -33,15 +33,21 @@
   	WHERE memberId = #{value}
   </select>
   
+  <select id="getAccountByMemberId" resultType="java.lang.String">
+  	SELECT account
+  	FROM MEMBER
+  	WHERE memberId = #{value} 
+  </select>
+  
   <insert id="insertSellItem" parameterType="SellItem"> <!-- 판매글 등록, sell_itemId는 oracle에서 sequence 설정해서 1부터 증가시키는 방식으로 사용 -->
-  	<selectKey keyProperty="getSeq" resultType="int" order="BEFORE">	
+  	<selectKey keyProperty="sell_itemId" resultType="int" order="BEFORE">	
 		select auto_increment.nextval FROM DUAL 
 	</selectKey>
   	
   	INSERT INTO SELLITEM 
-  		(sell_itemid, sell_itemname, sell_price, sell_author, sell_publisher, sell_info, sell_image, deal_method, deal_status, memberId)
+  		(sell_itemid, sell_itemname, sell_price, sell_author, sell_publisher, sell_info, sell_image, deal_method, deal_status, memberId, account)
   	VALUES 
-  		(#{getSeq}, #{sell_itemName}, #{sell_price}, #{sell_author}, #{sell_publihser}, #{sell_info}, #{sell_image}, #{deal_method}, 0, #{memberId})
+  		(#{sell_itemId}, #{sell_itemName}, #{sell_price}, #{sell_author}, #{sell_publisher}, #{sell_info}, #{sell_image}, #{deal_method}, 0, #{memberId}, #{account})
   </insert>
   
   <select id="getNamebyId" resultType="int"> <!-- memberId로 이름 구하기 -->
@@ -111,14 +117,14 @@
   </select>
   
   <insert id="insertWishlist" parameterType="Wishlist"> <!-- 즐겨찾기 등록, wish_id는 oracle에서 sequence 설정해서 1부터 증가시키는 방식으로 사용 -->
-  	<selectKey keyProperty="getSeq" resultType="int" order="BEFORE">	
+  	<selectKey keyProperty="wish_id" resultType="int" order="BEFORE">	
 		select auto_increment.nextval FROM DUAL 
 	</selectKey>
   	
   	INSERT INTO WISHLIST
-  		(wish_id, memberId, sell_itemId, sell_itemName, sell_price, sell_image, deal_status)
+  		(wish_id, memberId, sell_itemId, sell_itemName, sell_price, sell_image, deal_status, account)
   	VALUES
-  		(#{getSeq}, #{memberId}, #{sell_itemId}, #{sell_itemName}, #{sell_price}, #{sell_image})
+  		(#{wish_id}, #{memberId}, #{sell_itemId}, #{sell_itemName}, #{sell_price}, #{sell_image}, #{account})
   </insert>
   
   <select id="selectWishlist" resultType="Wishlist"> <!-- 즐겨찾기 조회 -->
@@ -144,9 +150,9 @@
 	</selectKey>
   	
   	INSERT INTO BUYFIN
-  		(sellfin_id, memberId, sell_itemId, sell_itemName, sell_price, sell_image, deal_method)
+  		(sellfin_id, memberId, sell_itemId, sell_itemName, sell_price, sell_image, deal_method, account)
   	VALUES
-  		(#{getSeq}, #{memberId}, #{sell_itemId}, #{sell_itemName}, #{sell_price}, #{sell_image}, #{deal_method})
+  		(#{getSeq}, #{memberId}, #{sell_itemId}, #{sell_itemName}, #{sell_price}, #{sell_image}, #{deal_method}, #{account})
   </insert>
   
   <select id="selectBuyFin" resultType="BuyFin"> <!-- 주문 완료 아이템 조회 -->

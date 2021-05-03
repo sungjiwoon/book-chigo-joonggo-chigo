@@ -1,13 +1,16 @@
 package com.bookchigo.domain;
 
-public class BuyFin {
+import java.io.Serializable;
+
+public class BuyFin implements Serializable {
 	private int sellfin_id; //완료 ID
 	private int memberId; //구매자의 아이디
 	private int sell_itemId;
 	private String sell_itemName;
 	private int sell_price;
 	private String sell_image; 
-	private String deal_method; 
+	private String deal_method;
+	private String account;
 	
 	public int getSellfin_id() {
 		return sellfin_id;
@@ -50,5 +53,11 @@ public class BuyFin {
 	}
 	public void setSell_itemId(int sell_itemId) {
 		this.sell_itemId = sell_itemId;
+	}
+	public String getAccount() {
+		return account;
+	}
+	public void setAccount(String account) {
+		this.account = account;
 	}
 }
