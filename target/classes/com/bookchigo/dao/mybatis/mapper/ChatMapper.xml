@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bookchigo.dao.mybatis.mapper.ChatMapper">
+	<select id="getChatBySellId" parameterType="Integer" resultType="com.bookchigo.domain.Chat">
+		Select CHATID, SELL_ITEMID, STUDYID, REGISTRATIONDATE
+			FROM CHATROOM
+			WHERE
+				SELL_ITEMID = #{sell_itemId}
+	</select>
+
+	<select id="getChatByStudyId" parameterType="Integer" resultType="com.bookchigo.domain.Chat">
+		Select CHATID, SELL_ITEMID, STUDYID, REGISTRATIONDATE
+			FROM CHATROOM
+			WHERE
+				STUDYID = #{studyId}
+	</select>
+
+	<select id="getSellerId" parameterType="Integer" resultType="Integer">
+		Select MEMBERID
+			FROM SELLITEM
+			WHERE
+				SELL_ITEMID = #{sell_itemId}
+	</select>
+
+	<insert id="insertChatRoom" parameterType="com.bookchigo.domain.Chat" useGeneratedKeys="true" keyColumn="chatId" keyProperty="chatId">
+		<selectKey keyProperty="chatId" resultType="int" order="BEFORE">
+			SELECT CHATROOM_SEQ.NEXTVAL
+				FROM DUAL
+		</selectKey>
+
+		Insert Into
+			CHATROOM
+			(CHATID, SELL_ITEMID, STUDYID, REGISTRATIONDATE)
+		VALUES
+			(#{chatId}, #{sell_itemId}, #{studyId}, TO_CHAR(SYSDATE, 'YYYY-MM-DD HH:mm:ss'))
+	</insert>
+
+	<insert id="insertChatMember" parameterType="Integer">
+		Insert Into
+			CHATMEMBER
+			(CHATID, MEMBERID)
+		VALUES
+			(#{chatId}, #{memberId})
+	</insert>
+
+	<insert id="insertChatMessage" parameterType="com.bookchigo.domain.ChatMessage">
+		<selectKey keyProperty="chatMessageId" resultType="int" order="BEFORE">
+			SELECT CHATMESSAGE_SEQ.NEXTVAL
+			FROM DUAL
+		</selectKey>
+
+		Insert Into
+		CHATMESSAGE
+		(CHATMESSAGEID, CHATID, ID, MEMBERID, MESSAGE, REGISTRATIONDATE)
+		VALUES
+		(#{chatMessageId}, #{chatId}, #{id}, #{memberId}, #{message}, #{registrationDate})
+	</insert>
+
+	<select id="getChatMessageList" parameterType="Integer" resultType="com.bookchigo.domain.ChatMessage">
+		Select CHATMESSAGEID, CHATID, ID, MEMBERID, MESSAGE, REGISTRATIONDATE
+			FROM CHATMESSAGE
+			WHERE
+				CHATID = #{chatId}
+			ORDER BY REGISTRATIONDATE
+	</select>
+
+	<select id="getChatRoomList" parameterType="Integer" resultType="com.bookchigo.domain.ChatRoom">
+		SELECT SUB.CHATID, ST.STUDYNAME, ST.BOOKIMAGEURL, SE.SELL_ITEMNAME, SE.SELL_IMAGE, SUB.STUDYID, SE.SELL_ITEMID, b.MESSAGE, b.REGISTRATIONDATE
+			FROM
+				(SELECT CM.CHATID, CR.SELL_ITEMID, CR.STUDYID
+				FROM CHATMEMBER CM
+					INNER JOIN CHATROOM CR ON CM.CHATID = CR.CHATID
+				WHERE MEMBERID = #{memberId}) SUB
+			LEFT JOIN STUDY ST ON ST.STUDYID = SUB.STUDYID
+			LEFT JOIN SELLITEM SE ON SE.SELL_ITEMID = SUB.SELL_ITEMID
+			LEFT JOIN
+				   ( SELECT CHATID,
+							MESSAGE,
+							REGISTRATIONDATE
+					 FROM   (
+					   SELECT CHATID,
+							  MESSAGE,
+							  REGISTRATIONDATE,
+							  ROW_NUMBER() OVER ( PARTITION BY CHATID ORDER BY REGISTRATIONDATE DESC) rn
+					   FROM   CHATMESSAGE
+					 )
+					 WHERE rn = 1
+				   ) b
+				   ON ( SUB.CHATID = b.CHATID )
+			ORDER BY REGISTRATIONDATE DESC
+	</select>
+
+	<select id="getChatMember" parameterType="Integer" resultType="int">
+		SELECT COUNT(*)
+		FROM CHATMEMBER
+		WHERE
+			CHATID = #{chatId} AND MEMBERID = #{memberId}
+	</select>
+
+
+</mapper>

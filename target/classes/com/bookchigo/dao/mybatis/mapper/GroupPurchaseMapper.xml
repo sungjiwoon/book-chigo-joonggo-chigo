@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bookchigo.dao.mybatis.mapper.GroupPurchaseMapper">
+	
+	<!-- 리스트 관련 -->
+	<select id="getGroupPurchaseList" resultType="com.bookchigo.domain.GroupPurchase">
+		SELECT *
+  		FROM GROUPPURCHASE
+	</select>
+	<select id="getGroupPurchaseImReaderList" resultType="com.bookchigo.domain.GroupPurchase">
+		SELECT *
+  		FROM GROUPPURCHASE
+		WHERE readerMemberId = #{value}
+	</select>
+	<select id="Search_GroupPurchase" parameterType="String" resultType="com.bookchigo.domain.GroupPurchase">
+		SELECT *
+  		FROM GROUPPURCHASE
+  		WHERE post_title LIKE '%'||#{value}||'%'
+	</select>
+	<select id="getWhoApplierList" resultType="com.bookchigo.domain.GpApply">
+		SELECT *
+  		FROM GPAPPLY
+  		WHERE gp_postId = #{value}
+	</select>
+	<select id="getMyApplyList" resultType="com.bookchigo.domain.GpApply">
+		SELECT *
+  		FROM GPAPPLY
+  		WHERE memberId = #{value}
+	</select>	
+		
+	<!-- get 관련 -->
+	<select id="getGpPostByPostId" resultType="com.bookchigo.domain.GroupPurchase">
+		SELECT *
+  		FROM GROUPPURCHASE
+  		WHERE gp_postId = #{value}
+	</select>
+	
+	<!-- 자세히 보기 -->
+	<select id="Detail_GroupPurchase" resultType="com.bookchigo.domain.GroupPurchase">
+		SELECT *
+  		FROM GROUPPURCHASE
+  		WHERE gp_postId = #{value}
+	</select>
+	
+	<!-- 게시글 업로드 -->
+	<select id="Upload_GroupPurchase" parameterType="GroupPurchase">
+		INSERT INTO GROUPPURCHASE
+		(book_id, gp_postId, post_title, post_contents, readerId, gp_date, ing, limit, now, 
+		account, dis_price, readerMemberID, book_photo)
+		VALUES
+		(#{book_id}, gp_postId.nextval, #{post_title}, #{post_contents}, #{readerId}, #{gp_date}, #{ing}, #{limit}, 
+		#{now}, #{account}, #{dis_price}, #{readerMemberId}, #{book_photo})
+	</select>
+	<select id="Delete_GroupPurchase" parameterType="int">
+		DELETE FROM GROUPPURCHASE
+		WHERE gp_postId = #{gp_postId}
+	</select>
+	<select id="Update_GroupPurchase" resultType="com.bookchigo.domain.GroupPurchase">
+		UPDATE GROUPPURCHASE SET
+			post_title = #{post_title},
+			post_contents = #{post_contents},
+			gp_date = #{gp_date},
+			limit = #{limit},
+			dis_price = #{dis_price}
+         WHERE gp_postId = #{gp_postId}
+	</select>
+
+	
+	<!-- 공구신청&취소 -->
+	<select id="Apply_GroupPurchase" parameterType="int" resultType="com.bookchigo.domain.GroupPurchase">
+		UPDATE GROUPPURCHASE SET
+		 now = now + 1
+		WHERE gp_postId = #{gp_postId}
+	</select>
+	<select id="Cancel_GroupPurchase" parameterType="int" resultType="com.bookchigo.domain.GroupPurchase">
+		UPDATE GROUPPURCHASE SET
+		now = now - 1
+		WHERE gp_postId = #{gp_postId}
+	</select>
+	
+	<!-- 디비에 삽입, 신청목록 추가 -->
+	<select id="insertGpApply" parameterType="GpApply">
+		INSERT INTO GPAPPLY (gp_postId, memberId, account, id) VALUES (#{gp_postId}, #{memberId}, #{account}, #{id})
+	</select>
+	<select id="deleteGpApply" parameterType="GpApply">
+		DELETE FROM GPAPPLY 
+		WHERE gp_postId = #{gp_postId} and memberId = #{memberId}
+	</select>
+	
+	<select id="ingUpdate" parameterType="int">
+		UPDATE GROUPPURCHASE SET
+		 ing = 1
+		WHERE gp_postId = #{gp_postId}
+	</select>
+	
+</mapper>

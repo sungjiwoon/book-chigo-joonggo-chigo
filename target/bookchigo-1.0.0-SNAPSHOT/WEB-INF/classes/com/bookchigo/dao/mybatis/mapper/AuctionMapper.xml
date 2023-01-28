@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bookchigo.dao.mybatis.mapper.AuctionMapper">
+
+  
+  <!-- 1 -->
+  <insert id="insertAuctionItem" parameterType="AuctionItem"> <!-- 경매 게시글 입력시 추가하는  -->
+  	<selectKey keyProperty="au_itemId" resultType="int" order="BEFORE">	
+		select au_itemSeq.nextval FROM DUAL 
+	</selectKey>
+    INSERT INTO AUCTIONITEM
+      (MEMBERID, AU_ITEMID, ITEMNAME, AUTHOR, PUBLISHER, DEADLINE, IMAGEURL, DEALSTATUS, STARTPRICE, FINALPRICE, AU_BIDID, AU_MEMBERID, ACCOUNT, CONDITION)
+    VALUES
+      (#{memberId}, #{au_itemId}, #{itemname}, #{author}, #{publisher}, #{deadline}, #{imageurl}, #{dealstatus}, #{startprice}, #{finalprice}, #{au_bidId}, #{au_memberId}, #{account}, #{condition})
+  </insert>
+  <!-- 2 -->
+  <update id="updateAuctionItem" parameterType="AuctionItem"> 
+  	UPDATE AUCTIONITEM SET
+  		ITEMNAME = #{itemname},
+  		AUTHOR= #{author},
+  		PUBLISHER = #{publisher},
+  		DEADLINE = #{deadline},
+  		IMAGEURL = #{imageurl},
+  		STARTPRICE = #{startprice},
+  		CONDITION= #{condition}
+  	WHERE AU_ITEMID = #{au_itemId}
+  </update>
+ 
+  <!-- 3 -->
+  <delete id="deleteAuctionItem"> <!-- 경매 아이템 삭제 -->
+  	DELETE FROM AUCTIONITEM
+  	WHERE AU_ITEMID = #{au_itemId}
+  </delete>  
+  
+  <!-- 4 -->
+  <select id="searchAuctionByItemName" resultType="AuctionItem"> <!-- itemName으로 경매 게시글들 검색 -->
+  	SELECT *
+  	FROM AUCTIONITEM
+  	WHERE ITEMNAME = #{itemname}
+  </select>
+  
+  <!-- 5 -->
+  <select id="searchAuctionByAuthor" resultType="AuctionItem"> <!-- author으로 경매 게시글들 검색 -->
+  	SELECT *
+  	FROM AUCTIONITEM
+  	WHERE AUTHOR = #{author}
+  </select>
+  
+  <!-- 6 -->
+  <select id="selectAuctionItem" resultType="AuctionItem"> <!-- 경매 게시글리스트 불러오기 -->
+  	SELECT *
+  	FROM AUCTIONITEM
+  	WHERE AU_ITEMID = #{value} 
+  </select>
+  
+  <!-- 7 -->
+   <select id="selectAuctionItemList" resultType="AuctionItem"> <!-- 경매 게시글리스트 불러오기 -->
+  	SELECT *
+  	FROM AUCTIONITEM
+  	order by AU_ITEMID desc
+  </select>
+  
+   <!-- 8 -->
+  <insert id="insertAuctionBid" parameterType="AuctionBid"> <!-- 경매 게시글에 입찰할 때 사용하는 -->
+  	<selectKey keyProperty="au_bidId" resultType="int" order="BEFORE">	
+		select au_bidSeq.nextval FROM DUAL 
+	</selectKey>
+    INSERT INTO AUCTIONBID
+      (MEMBERID, AU_BIDID, AU_ITEMID, BIDPRICE, BIDSTATUS, ACCOUNT)
+    VALUES
+      (#{memberId}, #{au_bidId}, #{au_itemId}, #{bidprice}, #{bidstatus}, #{account})
+  </insert>  
+  
+  <!-- 9 -->
+  <select id="selectAuctionBidList" resultType="AuctionBid"> <!-- 경매 입찰  불러오기 -->
+  	SELECT *
+  	FROM AUCTIONBID
+  	WHERE AU_ITEMID = #{au_itemId}
+  	order by BIDPRICE desc
+  </select>
+  
+  <!-- 10 -->
+  <insert id="insertNoticeMessageByAuction" parameterType="Notice"> <!-- 사용자에게 쪽지를 줄 때 사용. -->
+  	<selectKey keyProperty="noticeId" resultType="int" order="BEFORE">	
+		select noticeSeq.nextval FROM DUAL 
+	</selectKey>
+    INSERT INTO NOTICE
+      (MEMBERID, NOTICEID, TITLE, CONTENT, NOTICE_DATE, ACCOUNT, COUNT)
+    VALUES
+      (#{memberId}, #{noticeId}, #{title}, #{content}, #{notice_date}, #{account}, #{count})
+  </insert>
+  
+  <!-- 11 -->
+  <update id="updateAuctionBidDealStatus" parameterType="AuctionBid"> 
+  	UPDATE AUCTIONBID SET
+  		BIDSTATUS = #{bidstatus}
+  	WHERE AU_BIDID = #{au_bidId}
+  </update>
+  
+  <!-- 12 -->
+  <update id="updateAuctionItemDealStatus" parameterType="AuctionItem"> 
+  	UPDATE AUCTIONITEM SET
+  		DEALSTATUS = #{dealstatus},
+  		FINALPRICE = #{finalprice},
+  		AU_MEMBERID = #{au_memberId},
+  		AU_BIDID = #{au_bidId}
+  	WHERE AU_ITEMID = #{au_itemId}
+  </update>
+  
+  <!-- 13 -->
+  <select id="selectMemberByAuction" resultType="Member"> <!-- 판매자 정보 불러옴! -->
+  	SELECT NAME, ADDRESS, ACCOUNT, PHONE
+  	FROM MEMBER
+  	WHERE MEMBERID = #{memberId}
+  </select>  
+
+<!-- 14 -->
+  <select id = "selectAuctionBidOrderByPrice" resultType="AuctionBid">
+	SELECT *
+	FROM AUCTIONBID
+	WHERE AU_ITEMID = #{au_itemId} and BIDPRICE = (SELECT max(BIDPRICE) FROM AUCTIONBID WHERE AU_ITEMID = #{au_itemId} and BIDSTATUS = 0)
+  </select>
+
+  <!-- 15 -->
+  <select id="selectAuctionItemByMemberId" resultType="AuctionItem">
+  	SELECT *
+  	FROM AUCTIONITEM
+  	WHERE MEMBERID = #{memberId}
+  </select>
+  
+  <!-- 16 -->
+  <select id="selectAuctionBidByMemberId" resultType="AuctionBid">
+  	SELECT *
+  	FROM AUCTIONBID
+  	WHERE MEMBERID = #{memberId}
+  </select>
+  
+  <!-- 17 -->
+  <update id="updateAuctionBidDealStatusByAll"> 
+  	UPDATE AUCTIONBID
+  	SET	BIDSTATUS = #{bidstatus}
+  	WHERE AU_ITEMID = #{au_itemId} and BIDSTATUS = 0
+  </update> 
+  
+  <!-- 18 -->
+  <delete id="deleteAuctionBid"> <!-- 경매 입찰목록 삭제 -->
+  	DELETE FROM AUCTIONBID
+  	WHERE AU_ITEMID = #{au_itemId}
+  </delete> 
+  
+   
+</mapper>

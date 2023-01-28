@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bookchigo.dao.mybatis.mapper.StudyMapper">
+
+  <insert id="insertStudy" parameterType="com.bookchigo.domain.Study">
+   	<selectKey keyProperty="studyId" resultType="int" order="BEFORE">
+		SELECT STUDY_SEQ.NEXTVAL
+			FROM DUAL
+	</selectKey>
+  	
+  	Insert Into 
+  		Study
+  		(HOSTID, STUDYID, BOOKNAME, BOOKAUTHOR, BOOKIMAGEURL, CURRENTMEMBERCNT, MAXMEMBERCNT, DISCUSSIONDATE, INTRODUCTION, ACCOUNT, STUDYNAME)
+  	VALUES
+  		(#{hostId}, #{studyId}, #{bookName}, #{bookAuthor}, #{bookImageUrl, jdbcType=VARCHAR}, 1, #{maxMemberCnt}, #{discussionDate}, #{introduction}, #{account}, #{studyName})
+  </insert>
+  
+  <select id="getStudyList" resultType="com.bookchigo.domain.Study">
+  	Select HOSTID, STUDYID, BOOKNAME, BOOKAUTHOR, BOOKIMAGEURL, CURRENTMEMBERCNT, MAXMEMBERCNT, DISCUSSIONDATE, INTRODUCTION, ACCOUNT, STUDYNAME
+  		FROM Study
+  </select>
+</mapper>
