@@ -12,13 +12,13 @@
 <br>
 
 ### ✍️ 작품 구성도 <br>
-<img width ="80%" src="https://user-images.githubusercontent.com/59862752/215270674-9be5004e-760a-4215-9b42-0916d0dea0ad.png"><br>
+<img width ="80%" src=""><br>
 - 기기들의 상태 정보를 통합한 게이트웨이 서버 <br>
 - 기기들을 제어할 수 있는 모바일 서버를 분리하였습니다. <br>
 <br>
 
 ### ✍️ 프로그램 설계서 <br>
-<img width ="80%" src="https://user-images.githubusercontent.com/59862752/215270098-601f9969-f9b3-4e45-a398-8da1a98ec84c.png"><br>
+<img width ="80%" src=""><br>
 
 ### ✍️ 코드 <br>
 - 게이트웨이 서버 코드 : echoServer_send.py, echoServer_recv.py <br>
@@ -28,7 +28,7 @@
 https://www.youtube.com/watch?v=jqB4dv1RGsM
 
 ### ✍️ ERD 관계도
-<img width ="60%" src="https://user-images.githubusercontent.com/59862752/215270679-bdf8cd8f-5eee-45f7-9c6b-297bdfa17899.png"><br>
+<img width ="60%" src=""><br>
 
 
 
